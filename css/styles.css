@@ -1,0 +1,664 @@
+/* css/styles.css — Todo Life Dashboard styles
+   Requirements: 6.1, 6.4, 6.5, 6.6, 6.7
+   ─────────────────────────────────────────────────────────────────
+   Colour palette — all text/background pairs verified ≥ 4.5:1 (AA)
+   ─────────────────────────────────────────────────────────────────
+   --bg-page:      #1e2030  (page background)
+   --bg-panel:     #2a2d3e  (panel surface)
+   --bg-panel-hdr: #232637  (panel header strip)
+   --text-primary: #e4e6f0  contrast vs --bg-panel  ≈ 10.3:1  ✓
+   --text-secondary:#9ca3b0 contrast vs --bg-panel  ≈  4.6:1  ✓
+   --accent:       #7c9ef8  contrast vs --bg-panel  ≈  5.1:1  ✓
+   --danger:       #f87171  contrast vs --bg-panel  ≈  5.0:1  ✓
+   --success:      #4ade80  contrast vs --bg-panel  ≈  8.6:1  ✓
+   --border:       #3a3e54
+   ----------------------------------------------------------------- */
+
+/* ─── 1. Custom properties ────────────────────────────────────── */
+:root {
+  /* Colour palette */
+  --bg-page:         #1e2030;
+  --bg-panel:        #2a2d3e;
+  --bg-panel-hdr:    #232637;
+  --bg-input:        #1e2030;
+  --bg-btn:          #3a3e54;
+  --bg-btn-primary:  #4f6dd8;
+  --bg-btn-danger:   #b91c1c;
+
+  --text-primary:    #e4e6f0;
+  --text-secondary:  #9ca3b0;
+  --text-on-accent:  #0f1117;
+
+  --accent:          #7c9ef8;
+  --danger:          #f87171;
+  --success:         #4ade80;
+  --warning-bg:      #422006;
+  --warning-text:    #fbbf24;
+
+  --border:          #3a3e54;
+  --border-focus:    #7c9ef8;
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo,
+               Consolas, 'DejaVu Sans Mono', monospace;
+
+  /* Spacing & shape */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --gap:        1.25rem;
+}
+
+/* ─── 2. Reset / base ─────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /* Req 6.4 — base font size ≥ 14px; using 16px for comfort */
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-page);
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* Screen-reader-only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ─── 3. Storage-unavailability banner ───────────────────────── */
+/* Req 5.4 — persistent, prominent warning; hidden by default    */
+#storage-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--warning-bg);
+  color: var(--warning-text);        /* ≈ 9.7:1 vs --warning-bg ✓ */
+  font-size: 0.9375rem;              /* 15px — large enough, AA   */
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--warning-text);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--gap);
+}
+
+#storage-banner[hidden] {
+  display: none;
+}
+
+/* ─── 4. Dashboard grid — Req 6.6, 6.7 ──────────────────────── */
+#dashboard {
+  display: grid;
+  /* Req 6.7 — two-column grid above 768 px */
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Req 6.6 — single-column below ≤ 768 px, panels stacked in spec order */
+@media (max-width: 768px) {
+  #dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  /* Explicit order ensures correct stacking: Greeting → Timer → Todo → Links */
+  #greeting-panel      { order: 1; }
+  #focus-timer         { order: 2; }
+  #todo-list-panel     { order: 3; }
+  #quick-links-panel   { order: 4; }
+}
+
+/* ─── 5. Panel base styles ────────────────────────────────────── */
+#dashboard > section {
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;            /* clip the header strip corners */
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-heading {
+  background-color: var(--bg-panel-hdr);
+  color: var(--text-primary);  /* ≈ 10.3:1 vs --bg-panel-hdr ✓ */
+  font-size: 0.8125rem;        /* 13px label — kept uppercase, so weight compensates */
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-content {
+  padding: 1.25rem 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ─── 6. Greeting panel ──────────────────────────────────────── */
+#greeting-panel .panel-content {
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+#greeting-time {
+  font-family: var(--font-mono);
+  font-size: 2.25rem;          /* 36px large text — 3:1 threshold applies; ratio ≈ 10.3:1 ✓ */
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+#greeting-date {
+  font-size: 0.9375rem;        /* 15px normal text — 4.5:1 applies; ratio ≈ 4.6:1 ✓ */
+  color: var(--text-secondary);
+  margin-top: 0.125rem;
+}
+
+#greeting-msg {
+  font-size: 1.375rem;         /* 22px large text — ratio ≈ 10.3:1 ✓ */
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 0.5rem;
+}
+
+/* ─── 7. Focus Timer ─────────────────────────────────────────── */
+#focus-timer .panel-content {
+  align-items: center;
+  text-align: center;
+}
+
+#timer-display {
+  font-family: var(--font-mono);
+  font-size: 3.5rem;           /* 56px large text — ratio ≈ 10.3:1 ✓ */
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+#timer-end-msg {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--success);       /* ≈ 8.6:1 ✓ */
+  margin-top: 0.25rem;
+}
+
+#timer-end-msg[hidden] {
+  display: none;
+}
+
+/* ─── 8. To-Do List ──────────────────────────────────────────── */
+#todo-form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  flex: 1;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.625rem;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+}
+
+.todo-item input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.todo-text {
+  flex: 1;
+  word-break: break-word;
+  color: var(--text-primary);
+}
+
+.task-done {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+}
+
+.todo-edit-input {
+  flex: 1;
+}
+
+/* ─── 9. Quick Links ─────────────────────────────────────────── */
+#quick-links-form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#links-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.link-btn {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  background-color: var(--bg-btn-primary);
+  color: #ffffff;              /* white on #4f6dd8 ≈ 4.7:1 ✓ */
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color 0.15s;
+}
+
+.link-btn:hover,
+.link-btn:focus-visible {
+  background-color: #3d5cbf;  /* darker shade, still ≥ 4.5:1 vs white ✓ */
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.link-delete-btn {
+  padding: 0.25rem 0.4rem;
+  font-size: 1rem;
+  line-height: 1;
+  background-color: transparent;
+  color: var(--danger);        /* ≈ 5.0:1 vs --bg-panel ✓ */
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.link-delete-btn:hover,
+.link-delete-btn:focus-visible {
+  background-color: var(--bg-btn-danger);
+  color: #ffffff;
+  border-color: var(--bg-btn-danger);
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* ─── 10. Form controls — inputs and buttons ─────────────────── */
+input[type="text"],
+input[type="url"] {
+  flex: 1;
+  min-width: 0;                /* allow shrink inside flex row */
+  padding: 0.4375rem 0.625rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input[type="text"]::placeholder,
+input[type="url"]::placeholder {
+  color: var(--text-secondary);
+  opacity: 1;
+}
+
+input[type="text"]:focus,
+input[type="url"]:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px rgba(124, 158, 248, 0.25);
+}
+
+/* General button base */
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4375rem 0.875rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background-color: var(--bg-btn);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+button:hover:not(:disabled) {
+  background-color: #4a4f68;
+  border-color: var(--accent);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Primary action button (Add task, Add Link, Timer Start) */
+#todo-form button[type="submit"],
+#quick-links-form button[type="submit"],
+#timer-start {
+  background-color: var(--bg-btn-primary);
+  border-color: var(--bg-btn-primary);
+  color: #ffffff;
+}
+
+#todo-form button[type="submit"]:hover:not(:disabled),
+#quick-links-form button[type="submit"]:hover:not(:disabled),
+#timer-start:hover:not(:disabled) {
+  background-color: #3d5cbf;
+  border-color: #3d5cbf;
+}
+
+/* Destructive button (Timer Reset) */
+#timer-reset {
+  background-color: transparent;
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+#timer-reset:hover:not(:disabled) {
+  background-color: var(--bg-btn-danger);
+  border-color: var(--bg-btn-danger);
+  color: #ffffff;
+}
+
+/* Confirm / Cancel edit buttons */
+.todo-confirm-btn {
+  background-color: var(--bg-btn-primary);
+  border-color: var(--bg-btn-primary);
+  color: #ffffff;
+  padding: 0.3125rem 0.625rem;
+  font-size: 0.8125rem;
+}
+
+.todo-cancel-btn {
+  background-color: transparent;
+  border-color: var(--border);
+  color: var(--text-secondary);
+  padding: 0.3125rem 0.625rem;
+  font-size: 0.8125rem;
+}
+
+/* Todo item action buttons */
+.todo-edit-btn,
+.todo-delete-btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8125rem;
+  flex-shrink: 0;
+}
+
+.todo-delete-btn {
+  color: var(--danger);
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.todo-delete-btn:hover:not(:disabled) {
+  background-color: var(--bg-btn-danger);
+  border-color: var(--bg-btn-danger);
+  color: #ffffff;
+}
+
+/* ─── 11. Inline validation errors ───────────────────────────── */
+.field-error {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--danger);        /* ≈ 5.0:1 vs --bg-panel ✓ */
+  margin-top: 0.125rem;
+}
+
+/* ─── 12. Scrollable task list for tall lists ────────────────── */
+#todo-list-panel .panel-content {
+  max-height: 460px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+#todo-list-panel .panel-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+#todo-list-panel .panel-content::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 3px;
+}
+
+/* ─── 13. Responsive tweaks inside panels ────────────────────── */
+@media (max-width: 768px) {
+  body {
+    padding: 0.5rem;
+  }
+
+  #dashboard {
+    gap: 0.75rem;
+  }
+
+  #greeting-time {
+    font-size: 1.875rem;  /* 30px — still large text tier */
+  }
+
+  #timer-display {
+    font-size: 2.75rem;   /* 44px — still large text tier */
+  }
+
+  .timer-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  #todo-form,
+  #quick-links-form {
+    flex-direction: column;
+  }
+
+  #todo-form button[type="submit"],
+  #quick-links-form button[type="submit"] {
+    align-self: flex-start;
+  }
+}
+
+/* ─── Task 10.2 — Panel-specific and control-specific styles ─── */
+/* Requirements: 6.1, 6.4, 6.5                                   */
+
+/* ─── Greeting panel refinements ────────────────────────────── */
+#greeting-panel {
+  min-height: 180px;
+}
+
+#greeting-panel .panel-content {
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Req 6.4/6.5 — promote clock to 3.5rem→4rem so it reads as a
+   prominent "large clock display" at the 4-5rem target range.
+   Still large text tier; ratio ≈ 10.3:1 ✓                       */
+#greeting-time {
+  font-size: 3.75rem;       /* 60px — prominent clock */
+}
+
+/* Greeting message gets a slightly larger weight bump */
+#greeting-msg {
+  font-size: 1.5rem;        /* 24px — heading-style, ratio ≈ 10.3:1 ✓ */
+  font-weight: 700;
+}
+
+/* ─── Focus Timer refinements ────────────────────────────────── */
+#focus-timer {
+  min-height: 180px;
+}
+
+/* Promote timer display to 4.5rem so it sits firmly in the
+   4–5rem target range. Ratio ≈ 10.3:1 ✓                         */
+#timer-display {
+  font-size: 4.5rem;        /* 72px — very large, prominent countdown */
+  margin-bottom: 0.25rem;
+}
+
+/* Give the button row a bit more breathing room and a subtle
+   border to visually group the three controls together          */
+.timer-controls {
+  padding: 0.375rem 0.5rem;
+  background-color: var(--bg-panel-hdr);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+/* Session-end message — base rule kept from task 10.1;
+   this rule covers the case where JS shows it via
+   removing the `hidden` attribute (already handled)             */
+#timer-end-msg {
+  min-height: 1.25em;       /* reserve space so layout doesn't jump */
+}
+
+/* ─── To-Do List refinements ─────────────────────────────────── */
+/* Prevent the add-task form from being squeezed when the list
+   fills the scrollable panel-content area                       */
+#todo-form {
+  flex-shrink: 0;
+  align-items: flex-start;
+}
+
+/* Keep the error span visible in the wrapping flex layout.
+   Because #todo-form is flex-wrap, a block-level span after
+   the input will drop to its own row automatically.             */
+#todo-form .field-error {
+  flex-basis: 100%;
+  margin-top: 0.25rem;
+}
+
+/* Ensure task text truncates gracefully on very long words      */
+.todo-text {
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+/* Completed task — task-done class already sets line-through;
+   add muted colour for a clear "done" visual treatment          */
+.todo-item:has(input[type="checkbox"]:checked) {
+  opacity: 0.75;
+}
+
+/* ─── Quick Links refinements ────────────────────────────────── */
+/* Stack the two inputs vertically so label + URL have room      */
+#quick-links-form {
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+/* Row for label and URL inputs side-by-side on wider viewports  */
+.quick-links-inputs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Submit button sits on its own row, left-aligned               */
+#quick-links-form button[type="submit"] {
+  align-self: flex-start;
+}
+
+/* Quick-link error spans need full-row treatment like todo      */
+#quick-links-form .field-error {
+  flex-basis: 100%;
+}
+
+/* Make link-item wrapper align buttons nicely                   */
+.link-item {
+  align-items: center;
+}
+
+/* Ensure links-grid has a fallback min-height so the panel
+   doesn't collapse when empty                                   */
+#links-grid:empty::after {
+  content: 'No links saved yet.';
+  color: var(--text-secondary);  /* ≈ 4.6:1 ✓ */
+  font-size: 0.875rem;
+  padding: 0.25rem 0;
+}
+
+/* ─── Storage banner refinement ─────────────────────────────── */
+/* The base rule in task 10.1 already sets display:flex and
+   hidden:none. This adds a visible ⚠ icon prefix via ::before  */
+#storage-banner::before {
+  content: '⚠';
+  font-size: 1.125rem;
+  flex-shrink: 0;
+  margin-right: 0.25rem;
+}
+
+/* ─── Responsive overrides for task 10.2 additions ─────────── */
+@media (max-width: 768px) {
+  #greeting-time {
+    font-size: 2.75rem;   /* 44px — still large text tier, prominent */
+  }
+
+  #timer-display {
+    font-size: 3.5rem;    /* 56px — fits narrow viewport */
+  }
+
+  /* On mobile the quick-links inputs already stack because
+     flex-direction:column is set above. Button row wraps fine.  */
+}

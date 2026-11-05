@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo Life Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Storage unavailability warning — hidden by default, revealed by JS when localStorage is blocked -->
+  <div id="storage-banner" role="alert" aria-live="polite" hidden>
+    Warning: Local Storage is unavailable. Your tasks and links will not be saved.
+  </div>
+
+  <!-- Main dashboard grid wrapper -->
+  <div id="dashboard">
+
+    <!-- Panel 1: Greeting -->
+    <section id="greeting-panel" aria-label="Greeting">
+      <h1 class="panel-heading">Greeting</h1>
+      <div class="panel-content">
+        <time id="greeting-time" datetime="" aria-live="polite" aria-atomic="true"></time>
+        <p id="greeting-date"></p>
+        <h2 id="greeting-msg"></h2>
+      </div>
+    </section>
+
+    <!-- Panel 2: Focus Timer -->
+    <section id="focus-timer" aria-label="Focus Timer">
+      <h1 class="panel-heading">Focus Timer</h1>
+      <div class="panel-content">
+        <div id="timer-display" aria-live="polite" aria-atomic="true">25:00</div>
+        <div class="timer-controls" role="group" aria-label="Timer controls">
+          <button id="timer-start" type="button">Start</button>
+          <button id="timer-stop" type="button">Stop</button>
+          <button id="timer-reset" type="button">Reset</button>
+        </div>
+        <p id="timer-end-msg" role="status" hidden></p>
+      </div>
+    </section>
+
+    <!-- Panel 3: To-Do List -->
+    <section id="todo-list-panel" aria-label="To-Do List">
+      <h1 class="panel-heading">To-Do List</h1>
+      <div class="panel-content">
+        <form id="todo-form" novalidate>
+          <label for="todo-input" class="sr-only">New task</label>
+          <input
+            id="todo-input"
+            type="text"
+            maxlength="200"
+            placeholder="Add a task..."
+            autocomplete="off"
+            aria-describedby="todo-input-error"
+          >
+          <button type="submit">Add</button>
+        </form>
+        <ul id="todo-list" aria-label="Task list" aria-live="polite"></ul>
+      </div>
+    </section>
+
+    <!-- Panel 4: Quick Links -->
+    <section id="quick-links-panel" aria-label="Quick Links">
+      <h1 class="panel-heading">Quick Links</h1>
+      <div class="panel-content">
+        <form id="quick-links-form" novalidate>
+          <label for="link-label-input" class="sr-only">Link label</label>
+          <input
+            id="link-label-input"
+            type="text"
+            maxlength="50"
+            placeholder="Label"
+            autocomplete="off"
+            aria-describedby="link-label-error"
+          >
+          <label for="link-url-input" class="sr-only">Link URL</label>
+          <input
+            id="link-url-input"
+            type="url"
+            maxlength="2048"
+            placeholder="https://..."
+            autocomplete="off"
+            aria-describedby="link-url-error"
+          >
+          <button type="submit">Add Link</button>
+        </form>
+        <div id="links-grid" aria-label="Saved links" aria-live="polite"></div>
+      </div>
+    </section>
+
+  </div><!-- /#dashboard -->
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>

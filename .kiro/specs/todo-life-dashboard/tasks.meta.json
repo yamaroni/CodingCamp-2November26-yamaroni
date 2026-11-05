@@ -1,0 +1,150 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Scaffold project structure and HTML skeleton": [
+      {
+        "executionId": "2e90206a-1c39-49c4-b26e-c538baf55471",
+        "chatSessionId": "sess_a80e31d8-8d13-477b-a5f9-08320e44954e",
+        "timestamp": 1793884542600
+      },
+      {
+        "executionId": "2e90206a-1c39-49c4-b26e-c538baf55471",
+        "chatSessionId": "sess_a80e31d8-8d13-477b-a5f9-08320e44954e",
+        "timestamp": 1793884635234
+      }
+    ],
+    "2.1 Write the `StorageService` IIFE module in `js/app.js`": [
+      {
+        "executionId": "974ed234-9d9f-4f75-a93a-0938b622913f",
+        "chatSessionId": "sess_10771a23-69d6-4f68-b6ff-2e93589504da",
+        "timestamp": 1793884647523
+      },
+      {
+        "executionId": "974ed234-9d9f-4f75-a93a-0938b622913f",
+        "chatSessionId": "sess_10771a23-69d6-4f68-b6ff-2e93589504da",
+        "timestamp": 1793884709104
+      }
+    ],
+    "2. Implement `StorageService` module": [
+      {
+        "executionId": "974ed234-9d9f-4f75-a93a-0938b622913f",
+        "chatSessionId": "sess_10771a23-69d6-4f68-b6ff-2e93589504da",
+        "timestamp": 1793884709190
+      }
+    ],
+    "3.1 Write the `GreetingPanel` IIFE module in `js/app.js`": [
+      {
+        "executionId": "7db5201c-1a84-4976-8497-13c46d21b76b",
+        "chatSessionId": "sess_9a2910e8-f816-43f4-866f-8b0063cded19",
+        "timestamp": 1793884720723
+      },
+      {
+        "executionId": "7db5201c-1a84-4976-8497-13c46d21b76b",
+        "chatSessionId": "sess_9a2910e8-f816-43f4-866f-8b0063cded19",
+        "timestamp": 1793884769430
+      }
+    ],
+    "3. Implement `GreetingPanel` module": [
+      {
+        "executionId": "7db5201c-1a84-4976-8497-13c46d21b76b",
+        "chatSessionId": "sess_9a2910e8-f816-43f4-866f-8b0063cded19",
+        "timestamp": 1793884769529
+      }
+    ],
+    "4.1 Write the `FocusTimer` IIFE module in `js/app.js`": [
+      {
+        "executionId": "a15ed931-0fee-4349-8db2-459c206b1617",
+        "chatSessionId": "sess_24fc18b7-3588-4dd7-a6e0-b4cb80ae6a9d",
+        "timestamp": 1793884782765
+      },
+      {
+        "executionId": "a15ed931-0fee-4349-8db2-459c206b1617",
+        "chatSessionId": "sess_24fc18b7-3588-4dd7-a6e0-b4cb80ae6a9d",
+        "timestamp": 1793884831552
+      }
+    ],
+    "4. Implement `FocusTimer` module": [
+      {
+        "executionId": "a15ed931-0fee-4349-8db2-459c206b1617",
+        "chatSessionId": "sess_24fc18b7-3588-4dd7-a6e0-b4cb80ae6a9d",
+        "timestamp": 1793884831630
+      }
+    ],
+    "6.1 Write the `TodoList` IIFE module in `js/app.js`": [
+      {
+        "executionId": "424e8a3f-8d63-4ea6-af84-c395e9d09cf4",
+        "chatSessionId": "sess_812d8f84-7293-4caa-950a-2dfb32ca0437",
+        "timestamp": 1793884870722
+      },
+      {
+        "executionId": "424e8a3f-8d63-4ea6-af84-c395e9d09cf4",
+        "chatSessionId": "sess_812d8f84-7293-4caa-950a-2dfb32ca0437",
+        "timestamp": 1793884961334
+      }
+    ],
+    "6. Implement `TodoList` module": [
+      {
+        "executionId": "424e8a3f-8d63-4ea6-af84-c395e9d09cf4",
+        "chatSessionId": "sess_812d8f84-7293-4caa-950a-2dfb32ca0437",
+        "timestamp": 1793884961427
+      }
+    ],
+    "7.1 Write the `QuickLinks` IIFE module in `js/app.js`": [
+      {
+        "executionId": "58e03655-2d6e-44a9-aac4-46ec0d20db65",
+        "chatSessionId": "sess_3f227aae-2409-49cf-958d-56a97a4dd7d5",
+        "timestamp": 1793885049606
+      },
+      {
+        "executionId": "58e03655-2d6e-44a9-aac4-46ec0d20db65",
+        "chatSessionId": "sess_3f227aae-2409-49cf-958d-56a97a4dd7d5",
+        "timestamp": 1793885155236
+      }
+    ],
+    "7. Implement `QuickLinks` module": [
+      {
+        "executionId": "58e03655-2d6e-44a9-aac4-46ec0d20db65",
+        "chatSessionId": "sess_3f227aae-2409-49cf-958d-56a97a4dd7d5",
+        "timestamp": 1793885155318
+      }
+    ],
+    "9.1 Write the `App` init function in `js/app.js`": [
+      {
+        "executionId": "bfeb68eb-a11f-4be1-b5ef-7968b7a90eb9",
+        "chatSessionId": "sess_efa2f4b5-57e4-401e-85fc-e8efbd0831cc",
+        "timestamp": 1793885167756
+      },
+      {
+        "executionId": "bfeb68eb-a11f-4be1-b5ef-7968b7a90eb9",
+        "chatSessionId": "sess_efa2f4b5-57e4-401e-85fc-e8efbd0831cc",
+        "timestamp": 1793885217410
+      }
+    ],
+    "9. Implement `App` bootstrap coordinator and Local Storage banner": [
+      {
+        "executionId": "bfeb68eb-a11f-4be1-b5ef-7968b7a90eb9",
+        "chatSessionId": "sess_efa2f4b5-57e4-401e-85fc-e8efbd0831cc",
+        "timestamp": 1793885217444
+      }
+    ],
+    "10.1 Write the base styles and two-column grid layout in `css/styles.css`": [
+      {
+        "executionId": "62115a51-92d2-495a-a263-13152609f3e7",
+        "chatSessionId": "sess_c5ffb8be-cf32-4e4d-8ab7-f9ff581ff163",
+        "timestamp": 1793885229551
+      },
+      {
+        "executionId": "62115a51-92d2-495a-a263-13152609f3e7",
+        "chatSessionId": "sess_c5ffb8be-cf32-4e4d-8ab7-f9ff581ff163",
+        "timestamp": 1793885324694
+      }
+    ],
+    "10.2 Style all four panels and their controls": [
+      {
+        "executionId": "2f1ba820-9c97-4898-be91-d3bd6e73f8ed",
+        "chatSessionId": "sess_cb47896c-d2da-4aeb-ac83-74462a01493e",
+        "timestamp": 1793885337048
+      }
+    ]
+  }
+}
